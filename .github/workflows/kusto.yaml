@@ -20,7 +20,7 @@ jobs:
           fi
 
       - name: Output Test
-        run: echo MOUTPUT
+        run: echo $MOUTPUT
         env:
           MOUTPUT: toJSON(steps.test.outputs)
 
