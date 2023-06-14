@@ -1,0 +1,15 @@
+on: pull_request
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.5.2 # If running a Kusto script
+      - uses: philip-gai/setup-kusto@v1
+      - name: Run inline query
+        id: test
+        uses: philip-gai/kusto-script@main # Replace @main with @tag
+        with:
+          kusto-uri: https://mycluster.kusto.windows.net # Example: https://mycluster.kusto.windows.net or https://mycluster.kusto.windows.net/MyDatabase
+          kusto-query: ".show databases"
+      - name: Output Test
+        run: echo ${{steps.test.outputs}}
