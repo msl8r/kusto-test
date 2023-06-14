@@ -13,3 +13,4 @@ jobs:
           kusto-query: ".show databases"
       - name: Output Test
         run: echo ${{steps.test.outputs}}
+
