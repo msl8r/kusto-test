@@ -3,13 +3,35 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.5.2 # If running a Kusto script
-      - uses: philip-gai/setup-kusto@v1
+      - name: Run inline query
+        id: testing
+        run: |
+          result="hello world fwff87434864"
+          echo "$result"
+
+          if [ ! -z "$CI" ]; then
+              # EOF needed for multiline output
+              echo "result<<EOF" >>$GITHUB_OUTPUT
+              echo "$result" >>$GITHUB_OUTPUT
+              echo "EOF" >>$GITHUB_OUTPUT
+              echo "$result" >>$GITHUB_STEP_SUMMARY
+          fi
       - name: Run inline query
         id: test
-        uses: philip-gai/kusto-script@main # Replace @main with @tag
-        with:
-          kusto-uri: https://mycluster.kusto.windows.net # Example: https://mycluster.kusto.windows.net or https://mycluster.kusto.windows.net/MyDatabase
-          kusto-query: ".show databases"
+        run: |
+          result="hello world fwff87434864"
+          echo "$result"
+
+          if [ ! -z "$CI" ]; then
+              # EOF needed for multiline output
+              echo "result<<EOF" >>$GITHUB_OUTPUT
+              echo "$result" >>$GITHUB_OUTPUT
+              echo "EOF" >>$GITHUB_OUTPUT
+              echo "$result" >>$GITHUB_STEP_SUMMARY
+          fi
+
       - name: Output Test
-        run: echo ${{steps.test.outputs}}
+        run: echo $MOUTPUT
+        env:
+          MOUTPUT: ${{ toJSON(steps.test.outputs) }}
+
